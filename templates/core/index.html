@@ -1126,6 +1126,158 @@
                 width: 100%;
             }
         }
+
+        /* Services Section Styles */
+        .services {
+            padding: 80px 20px;
+            background: #f9f9f9;
+            text-align: center;
+        }
+
+        .section-header {
+            max-width: 800px;
+            margin: 0 auto 50px;
+        }
+
+        .section-header h2 {
+            color: #27ae60;
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-header h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: #27ae60;
+        }
+
+        .section-header p {
+            color: #666;
+            font-size: 1.1rem;
+            margin-top: 20px;
+        }
+
+        .services-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .service-card {
+            background: white;
+            padding: 30px 25px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .service-icon {
+            width: 80px;
+            height: 80px;
+            background: #e8f5e9;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            color: #27ae60;
+            font-size: 30px;
+            transition: all 0.3s ease;
+        }
+
+        .service-card:hover .service-icon {
+            background: #27ae60;
+            color: white;
+            transform: rotate(15deg) scale(1.1);
+        }
+
+        .service-card h3 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+        }
+
+        .service-card p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 768px) {
+            .services-container {
+                grid-template-columns: 1fr;
+            }
+
+            .section-header h2 {
+                font-size: 2rem;
+            }
+        }
+
+        /* Hero Stats Styles */
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+
+        .hero-stat {
+            text-align: center;
+            padding: 15px 25px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 10px;
+            backdrop-filter: blur(5px);
+            min-width: 120px;
+        }
+
+        .stat-number {
+            font-size: 32px;
+            font-weight: bold;
+            color: white;
+            margin-bottom: 5px;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: greenyellow;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        @media (max-width: 768px) {
+            .hero-stats {
+                gap: 15px;
+            }
+
+            .hero-stat {
+                padding: 10px 15px;
+                min-width: 100px;
+            }
+
+            .stat-number {
+                font-size: 24px;
+            }
+
+            .stat-label {
+                font-size: 12px;
+            }
+        }
     </style>
 </head>
 
@@ -1144,6 +1296,9 @@
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
                         <a class="nav-link" href="#home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#services">Services</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#packages">Packages</a>
@@ -1167,18 +1322,102 @@
         </div>
     </nav>
 
-    <!-- Hero Section -->
+
+    <!-- Hero Section with Animated Stats -->
     <header class="hero" id="home">
         <div class="hero-content">
-            <h1>Physiotherapy Expert</h1>
+            <h1 id="animated-title">Physiotherapy Expert</h1>
             <p id="animated-subtitle" style="color: greenyellow;"></p>
+
+            <!-- Animated Stats Row -->
+            <div class="hero-stats">
+                <div class="hero-stat">
+                    <div class="stat-number" data-target="100" data-suffix="+">0</div>
+                    <div class="stat-label">Happy Clients</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="stat-number" data-target="24" data-suffix="/7">0</div>
+                    <div class="stat-label">Service Hours</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="stat-number" data-target="98" data-suffix="%">0</div>
+                    <div class="stat-label">Recovery Rate</div>
+                </div>
+            </div>
+
             <button class="cta-button" onclick="openAppointmentModal()">Book Appointment</button>
         </div>
     </header>
 
+
+    <!-- Services Section -->
+    <section class="services" id="services">
+        <div class="section-header">
+            <h2>Our Services</h2>
+            <p>Comprehensive physiotherapy treatments tailored to your needs</p>
+        </div>
+
+        <div class="services-container">
+            <div class="service-card">
+                <div class="service-icon">
+                    <i class="fas fa-bone"></i>
+                </div>
+                <h3>Orthopedic Therapy</h3>
+                <p>Treatment for fractures, sprains, arthritis, and post-surgical rehabilitation to restore mobility.
+                </p>
+            </div>
+
+            <div class="service-card">
+                <div class="service-icon">
+                    <i class="fas fa-brain"></i>
+                </div>
+                <h3>Neurological Rehab</h3>
+                <p>Specialized care for stroke, Parkinson's, and spinal cord injuries to improve function.</p>
+            </div>
+
+            <div class="service-card">
+                <div class="service-icon">
+                    <i class="fas fa-child"></i>
+                </div>
+                <h3>Pediatric Therapy</h3>
+                <p>Developmental support for children with cerebral palsy, autism, and motor delays.</p>
+            </div>
+
+            <div class="service-card">
+                <div class="service-icon">
+                    <i class="fas fa-running"></i>
+                </div>
+                <h3>Sports Rehabilitation</h3>
+                <p>Injury prevention and recovery programs for athletes of all levels.</p>
+            </div>
+
+            <div class="service-card">
+                <div class="service-icon">
+                    <i class="fas fa-thermometer-half"></i>
+                </div>
+                <h3>Pain Management</h3>
+                <p>Chronic pain relief through targeted therapies and exercise programs.</p>
+            </div>
+
+            <div class="service-card">
+                <div class="service-icon">
+                    <i class="fas fa-wheelchair"></i>
+                </div>
+                <h3>Geriatric Care</h3>
+                <p>Specialized programs for seniors to maintain independence and mobility.</p>
+            </div>
+        </div>
+
+
+    </section>
+
+
+
     <!-- Packages Section -->
     <section class="packages" id="packages">
-        <h2 class="pack_head">Our Packages</h2>
+        <div class="section-header">
+            <h2>Our Packages</h2>
+        </div>
         <div class="package-container">
             {% for package in packages %}
             <div class="package">
@@ -1189,11 +1428,14 @@
             </div>
             {% endfor %}
         </div>
+
     </section>
 
     <!-- About Section -->
     <section class="about" id="about">
-        <h2 class="about-header">About Us</h2>
+        <div class="section-header">
+            <h2>About Us</h2>
+        </div>
         {% for about in about %}
         <div class="about-container">
             <img src="{{ about.image.url }}" alt="about">
@@ -1638,57 +1880,91 @@
             {% endif %}
         });
 
+        document.addEventListener("DOMContentLoaded", function() {
+    // Elements
+    const subtitle = document.getElementById("animated-subtitle");
+    const counters = document.querySelectorAll('.stat-number');
+    
+    // Rotating Messages Configuration
+    const messages = [
+        "Professional Care for Your Health",
+        "Personalized Treatment Plans",
+        "Expert Rehabilitation Services"
+    ];
+    let messageIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+    let typingSpeed = 100;
+    const deleteSpeed = 50;
+    const pauseBetweenMessages = 2000;
+    
+    // Counter Animation Configuration
+    const counterDuration = 2000; // 2 seconds for counters
+    let countersStarted = false;
 
-        // Typing effect
-        document.addEventListener("DOMContentLoaded", function () {
-            const subtitle = document.getElementById("animated-subtitle");
-            const messages = [
-                "Professional Care for Your Health",
-                "Personalized Treatment Plans",
-                "Expert Rehabilitation Services"
-            ];
-            let messageIndex = 0;
-            let charIndex = 0;
-            let isDeleting = false;
-            let typingSpeed = 100;
-            let pauseBetweenMessages = 2000;
-            let deleteSpeed = 50;
+    // Main Typing Function
+    function typeWriter() {
+        const currentMessage = messages[messageIndex];
+        
+        if (isDeleting) {
+            // Deleting phase
+            subtitle.innerHTML = currentMessage.substring(0, charIndex - 1) + '<span class="typing-cursor"></span>';
+            charIndex--;
+            typingSpeed = deleteSpeed;
+        } else {
+            // Typing phase
+            subtitle.innerHTML = currentMessage.substring(0, charIndex + 1) + '<span class="typing-cursor"></span>';
+            charIndex++;
+            typingSpeed = 100;
+        }
 
-            function typeWriter() {
-                const currentMessage = messages[messageIndex];
-
-                if (isDeleting) {
-                    // Deleting phase
-                    subtitle.innerHTML = currentMessage.substring(0, charIndex - 1) + '<span class="typing-cursor"></span>';
-                    charIndex--;
-                    typingSpeed = deleteSpeed;
-                } else {
-                    // Typing phase
-                    subtitle.innerHTML = currentMessage.substring(0, charIndex + 1) + '<span class="typing-cursor"></span>';
-                    charIndex++;
-                    typingSpeed = 100;
-                }
-
-                if (!isDeleting && charIndex === currentMessage.length) {
-                    // Finished typing, pause then start deleting
-                    typingSpeed = pauseBetweenMessages;
-                    isDeleting = true;
-                } else if (isDeleting && charIndex === 0) {
-                    // Finished deleting, move to next message
-                    isDeleting = false;
-                    messageIndex = (messageIndex + 1) % messages.length;
-                    typingSpeed = 500; // Pause before typing next message
-                }
-
-                setTimeout(typeWriter, typingSpeed);
+        // State transitions
+        if (!isDeleting && charIndex === currentMessage.length) {
+            // Finished typing, pause then start deleting
+            typingSpeed = pauseBetweenMessages;
+            isDeleting = true;
+            
+            // Start counters after first message completes
+            if (!countersStarted && messageIndex === 0) {
+                startCounterAnimations();
+                countersStarted = true;
             }
+        } else if (isDeleting && charIndex === 0) {
+            // Finished deleting, move to next message
+            isDeleting = false;
+            messageIndex = (messageIndex + 1) % messages.length;
+            typingSpeed = 500; // Pause before typing next message
+        }
 
-            // Start the animation
-            setTimeout(typeWriter, 1000); // Initial delay
+        setTimeout(typeWriter, typingSpeed);
+    }
+
+    // Counter Animation Function
+    function startCounterAnimations() {
+        counters.forEach(counter => {
+            const target = +counter.getAttribute('data-target');
+            const suffix = counter.getAttribute('data-suffix') || '';
+            const startTime = performance.now();
+
+            function updateCounter(currentTime) {
+                const elapsedTime = currentTime - startTime;
+                const progress = Math.min(elapsedTime / counterDuration, 1);
+                const currentValue = Math.floor(progress * target);
+                
+                counter.textContent = currentValue + suffix;
+                
+                if (progress < 1) {
+                    requestAnimationFrame(updateCounter);
+                }
+            }
+            
+            requestAnimationFrame(updateCounter);
         });
+    }
 
-
-
+    // Start the animations
+    setTimeout(typeWriter, 1000); // Initial delay for typing
+});
     </script>
 </body>
 
