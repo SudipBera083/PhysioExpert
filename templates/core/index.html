@@ -1278,6 +1278,51 @@
                 font-size: 12px;
             }
         }
+
+
+        /* Pagination Styles */
+        .pagination {
+            margin-top: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .page-link {
+            color: #27ae60;
+            padding: 8px 16px;
+            margin: 0 5px;
+            text-decoration: none;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .page-link:hover {
+            background: #27ae60;
+            color: white;
+            border-color: #27ae60;
+        }
+
+        .current {
+            padding: 8px 16px;
+            margin: 0 5px;
+            color: #666;
+        }
+
+        .step-links {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        @media (max-width: 480px) {
+            .step-links {
+                flex-direction: column;
+                gap: 5px;
+            }
+        }
     </style>
 </head>
 
@@ -1519,6 +1564,8 @@
         </div>
     </section>
 
+
+
     <!-- Modal for All Reviews -->
     <div id="reviewModal" class="modal">
         <div class="modal-content">
@@ -1536,6 +1583,25 @@
                     <small class="modal-review-date">{{ review.created_at }}</small>
                 </div>
                 {% endfor %}
+            </div>
+
+            <!-- Pagination Controls -->
+            <div class="pagination">
+                <span class="step-links">
+                    {% if reviews.has_previous %}
+                    <a href="?page=1" class="page-link">&laquo; first</a>
+                    <a href="?page={{ reviews.previous_page_number }}" class="page-link">previous</a>
+                    {% endif %}
+
+                    <span class="current">
+                        Page {{ reviews.number }} of {{ reviews.paginator.num_pages }}
+                    </span>
+
+                    {% if reviews.has_next %}
+                    <a href="?page={{ reviews.next_page_number }}" class="page-link">next</a>
+                    <a href="?page={{ reviews.paginator.num_pages }}" class="page-link">last &raquo;</a>
+                    {% endif %}
+                </span>
             </div>
         </div>
     </div>
@@ -1880,91 +1946,125 @@
             {% endif %}
         });
 
-        document.addEventListener("DOMContentLoaded", function() {
-    // Elements
-    const subtitle = document.getElementById("animated-subtitle");
-    const counters = document.querySelectorAll('.stat-number');
-    
-    // Rotating Messages Configuration
-    const messages = [
-        "Professional Care for Your Health",
-        "Personalized Treatment Plans",
-        "Expert Rehabilitation Services"
-    ];
-    let messageIndex = 0;
-    let charIndex = 0;
-    let isDeleting = false;
-    let typingSpeed = 100;
-    const deleteSpeed = 50;
-    const pauseBetweenMessages = 2000;
-    
-    // Counter Animation Configuration
-    const counterDuration = 2000; // 2 seconds for counters
-    let countersStarted = false;
+        document.addEventListener("DOMContentLoaded", function () {
+            // Elements
+            const subtitle = document.getElementById("animated-subtitle");
+            const counters = document.querySelectorAll('.stat-number');
 
-    // Main Typing Function
-    function typeWriter() {
-        const currentMessage = messages[messageIndex];
-        
-        if (isDeleting) {
-            // Deleting phase
-            subtitle.innerHTML = currentMessage.substring(0, charIndex - 1) + '<span class="typing-cursor"></span>';
-            charIndex--;
-            typingSpeed = deleteSpeed;
-        } else {
-            // Typing phase
-            subtitle.innerHTML = currentMessage.substring(0, charIndex + 1) + '<span class="typing-cursor"></span>';
-            charIndex++;
-            typingSpeed = 100;
-        }
+            // Rotating Messages Configuration
+            const messages = [
+                "Professional Care for Your Health",
+                "Personalized Treatment Plans",
+                "Expert Rehabilitation Services"
+            ];
+            let messageIndex = 0;
+            let charIndex = 0;
+            let isDeleting = false;
+            let typingSpeed = 100;
+            const deleteSpeed = 50;
+            const pauseBetweenMessages = 2000;
 
-        // State transitions
-        if (!isDeleting && charIndex === currentMessage.length) {
-            // Finished typing, pause then start deleting
-            typingSpeed = pauseBetweenMessages;
-            isDeleting = true;
-            
-            // Start counters after first message completes
-            if (!countersStarted && messageIndex === 0) {
-                startCounterAnimations();
-                countersStarted = true;
-            }
-        } else if (isDeleting && charIndex === 0) {
-            // Finished deleting, move to next message
-            isDeleting = false;
-            messageIndex = (messageIndex + 1) % messages.length;
-            typingSpeed = 500; // Pause before typing next message
-        }
+            // Counter Animation Configuration
+            const counterDuration = 2000; // 2 seconds for counters
+            let countersStarted = false;
 
-        setTimeout(typeWriter, typingSpeed);
-    }
+            // Main Typing Function
+            function typeWriter() {
+                const currentMessage = messages[messageIndex];
 
-    // Counter Animation Function
-    function startCounterAnimations() {
-        counters.forEach(counter => {
-            const target = +counter.getAttribute('data-target');
-            const suffix = counter.getAttribute('data-suffix') || '';
-            const startTime = performance.now();
-
-            function updateCounter(currentTime) {
-                const elapsedTime = currentTime - startTime;
-                const progress = Math.min(elapsedTime / counterDuration, 1);
-                const currentValue = Math.floor(progress * target);
-                
-                counter.textContent = currentValue + suffix;
-                
-                if (progress < 1) {
-                    requestAnimationFrame(updateCounter);
+                if (isDeleting) {
+                    // Deleting phase
+                    subtitle.innerHTML = currentMessage.substring(0, charIndex - 1) + '<span class="typing-cursor"></span>';
+                    charIndex--;
+                    typingSpeed = deleteSpeed;
+                } else {
+                    // Typing phase
+                    subtitle.innerHTML = currentMessage.substring(0, charIndex + 1) + '<span class="typing-cursor"></span>';
+                    charIndex++;
+                    typingSpeed = 100;
                 }
-            }
-            
-            requestAnimationFrame(updateCounter);
-        });
-    }
 
-    // Start the animations
-    setTimeout(typeWriter, 1000); // Initial delay for typing
-});
+                // State transitions
+                if (!isDeleting && charIndex === currentMessage.length) {
+                    // Finished typing, pause then start deleting
+                    typingSpeed = pauseBetweenMessages;
+                    isDeleting = true;
+
+                    // Start counters after first message completes
+                    if (!countersStarted && messageIndex === 0) {
+                        startCounterAnimations();
+                        countersStarted = true;
+                    }
+                } else if (isDeleting && charIndex === 0) {
+                    // Finished deleting, move to next message
+                    isDeleting = false;
+                    messageIndex = (messageIndex + 1) % messages.length;
+                    typingSpeed = 500; // Pause before typing next message
+                }
+
+                setTimeout(typeWriter, typingSpeed);
+            }
+
+            // Counter Animation Function
+            function startCounterAnimations() {
+                counters.forEach(counter => {
+                    const target = +counter.getAttribute('data-target');
+                    const suffix = counter.getAttribute('data-suffix') || '';
+                    const startTime = performance.now();
+
+                    function updateCounter(currentTime) {
+                        const elapsedTime = currentTime - startTime;
+                        const progress = Math.min(elapsedTime / counterDuration, 1);
+                        const currentValue = Math.floor(progress * target);
+
+                        counter.textContent = currentValue + suffix;
+
+                        if (progress < 1) {
+                            requestAnimationFrame(updateCounter);
+                        }
+                    }
+
+                    requestAnimationFrame(updateCounter);
+                });
+            }
+
+            // Start the animations
+            setTimeout(typeWriter, 1000); // Initial delay for typing
+        });
+
+
+
+        // Modify your modal open/close functions to preserve page parameter
+        function openModal() {
+            const currentPage = new URLSearchParams(window.location.search).get('page') || 1;
+            const modal = document.getElementById("reviewModal");
+            modal.style.display = "block";
+            document.body.style.overflow = "hidden";
+
+            // Update pagination links to work within modal
+            document.querySelectorAll('.pagination a').forEach(link => {
+                link.onclick = function (e) {
+                    e.preventDefault();
+                    const url = new URL(this.href);
+                    const page = url.searchParams.get('page');
+                    window.history.pushState({}, '', `?page=${page}`);
+                    location.reload();
+                };
+            });
+        }
+
+        function closeModal() {
+            const modal = document.getElementById("reviewModal");
+            modal.style.display = "none";
+            document.body.style.overflow = "auto";
+
+            // Remove page parameter when closing modal if on first page
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('page')) {
+                urlParams.delete('page');
+                window.history.replaceState({}, '', `${window.location.pathname}?${urlParams}`);
+            }
+        }
     </script>
 </body>
 

@@ -5,24 +5,35 @@ from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 
+from django.core.paginator import Paginator
+
 def index(request):
     packages = Package.objects.all()
-    about  = About.objects.all()
-    reviews = Review.objects.all().order_by('-created_at')  # Fetch existing reviews
-    form = ReviewForm()  # Ensure the form is available in the context
+    about = About.objects.all()
+    
+    # Paginate reviews
+    all_reviews = Review.objects.all().order_by('-created_at')
+    paginator = Paginator(all_reviews, 6)  # Show 5 reviews per page
+    page_number = request.GET.get('page')
+    reviews = paginator.get_page(page_number)
+    
+    form = ReviewForm()
     appointment_form = AppointmentForm()
-     # Check if we should show the appointment modal
     show_modal = request.session.pop('show_appointment_modal', False)
 
-    obj = {
+    
+
+    context = {
         'packages': packages,
         'about': about,
-        'reviews': reviews,
+        'reviews': reviews,  # Now it's a Page object, not a QuerySet
         'form': form,
         'appointment_form': appointment_form,
         'show_appointment_modal': show_modal,
     }
-    return render(request, 'core/index.html', obj)
+    return render(request, 'core/index.html', context)
+
+
 
 def submit_review(request):
     if request.method == "POST":
