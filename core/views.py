@@ -2,10 +2,11 @@ from django.shortcuts import render, redirect
 from .models import Package, About, Review, Appointment
 from .forms import ReviewForm, AppointmentForm
 from django.contrib import messages
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
 from django.urls import reverse
-
 from django.core.paginator import Paginator
+from django.views.decorators.csrf import csrf_exempt
+
 
 def index(request):
     packages = Package.objects.all()
@@ -13,7 +14,7 @@ def index(request):
     
     # Paginate reviews
     all_reviews = Review.objects.all().order_by('-created_at')
-    paginator = Paginator(all_reviews, 6)  # Show 5 reviews per page
+    paginator = Paginator(all_reviews, 6)  # Show 6 reviews per page
     page_number = request.GET.get('page')
     reviews = paginator.get_page(page_number)
     
@@ -21,15 +22,19 @@ def index(request):
     appointment_form = AppointmentForm()
     show_modal = request.session.pop('show_appointment_modal', False)
 
-    
+    # Check if request is coming from modal pagination
+    return_to_modal = request.GET.get('modal') == 'true' or request.session.pop('return_to_modal', False)
+    if return_to_modal:
+        request.session['return_to_modal'] = True  # Keep it for potential redirects
 
     context = {
         'packages': packages,
         'about': about,
-        'reviews': reviews,  # Now it's a Page object, not a QuerySet
+        'reviews': reviews,
         'form': form,
         'appointment_form': appointment_form,
         'show_appointment_modal': show_modal,
+        'return_to_modal': return_to_modal,  # Pass to template
     }
     return render(request, 'core/index.html', context)
 
@@ -65,3 +70,12 @@ def book_appointment(request):
     
     # If GET request or invalid form, redirect to main page
     return redirect('main:mainPage')
+
+
+
+
+@csrf_exempt
+def clear_modal_session(request):
+    if 'return_to_modal' in request.session:
+        del request.session['return_to_modal']
+    return JsonResponse({'status': 'success'})
