@@ -1,0 +1,635 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Physiotherapy Expert</title>
+    <style>
+        /* Star Rating */
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            color: #333;
+            background: #f8f9fa;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: url("{% static 'images/hero-bg.jpg' %}") no-repeat center center/cover;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: #27ae60;
+            color: white;
+            padding: 12px 20px;
+            margin-top: 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+
+        .cta-button:hover {
+            background: #1e8449;
+        }
+
+        /* Carousel Section */
+       
+/* Center everything */
+.carousel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    width: 80%;
+    margin: auto;
+    overflow: hidden;
+}
+
+/* Make the container flex for smooth sliding */
+.carousel-container {
+    display: flex;
+    transition: transform 0.8s cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+
+/* Review card with glassmorphism effect */
+.review-slide {
+    min-width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.review-card {
+    max-width: 80%;
+    padding: 20px;
+    border-radius: 15px;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    color: white;
+    transition: transform 0.4s ease-in-out;
+}
+
+/* Profile pic */
+.profile-pic {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+/* Review text */
+.review-text {
+    font-size: 1.2rem;
+    font-style: italic;
+}
+
+/* Reviewer name */
+.reviewer-name {
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+/* Star rating */
+.stars {
+    color: gold;
+    font-size: 1.2rem;
+    margin: 5px 0;
+}
+
+/* Date */
+.review-date {
+    font-size: 0.9rem;
+    opacity: 0.7;
+}
+
+/* Navigation buttons */
+.prev, .next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 15px;
+    cursor: pointer;
+    font-size: 20px;
+    border-radius: 50%;
+    transition: 0.3s;
+}
+
+.prev:hover, .next:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+/* Positioning the buttons */
+.prev { left: 10px; }
+.next { right: 10px; }
+
+/* Progress dots */
+.progress-dots {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.dot {
+    width: 12px;
+    height: 12px;
+    margin: 5px;
+    background: white;
+    border-radius: 50%;
+    opacity: 0.5;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.dot.active {
+    background: gold;
+    opacity: 1;
+}
+
+
+        /* Feedback Form */
+        .feedback {
+            padding: 40px 20px;
+            background: #f1f1f1;
+        }
+
+        #review-form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            max-width: 400px;
+            margin: auto;
+        }
+
+        #review-form input,
+        #review-form textarea {
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        button {
+            background: #27ae60;
+            color: white;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background: #219150;
+        }
+
+        .star-rating {
+            display: flex;
+            justify-content: center;
+            font-size: 24px;
+            color: gray;
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+
+      
+
+        .star:hover,
+        .star.active {
+            color: gold;
+        }
+
+        /* Review Stars in Carousel */
+        .stars {
+            font-size: 20px;
+            color: gold;
+            margin-top: 5px;
+        }
+
+        .packages {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .package {
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            transition: transform 0.3s;
+        }
+
+        .package img {
+            width: 100%;
+            /* Makes the image responsive */
+            height: 200px;
+            /* Fixed height for uniformity */
+            object-fit: cover;
+            /* Ensures images are cropped properly without stretching */
+            border-radius: 10px;
+        }
+
+        .package:hover {
+            transform: scale(1.05);
+        }
+
+
+        /* contact and about */
+        /* About Section */
+.about {
+    padding: 50px;
+    background: #f9f9f9;
+    text-align: center;
+}
+
+.about-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    margin-top: 20px;
+}
+
+.about-container img {
+    width: 400px;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    animation: fadeIn 1s ease-in-out;
+}
+
+.about-text {
+    max-width: 500px;
+    text-align: left;
+}
+
+.about-text h3 {
+    color: #ff5e62;
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+/* Footer Section */
+.footer {
+    background: #222;
+    color: white;
+    padding: 30px 0;
+    text-align: center;
+}
+
+.footer-container {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    padding: 20px;
+    max-width: 1000px;
+    margin: auto;
+}
+
+.footer-info, .footer-contact {
+    max-width: 400px;
+}
+
+.footer-info h3, .footer-contact h3 {
+    color: #ff9966;
+    margin-bottom: 10px;
+}
+
+.footer-contact p {
+    margin: 5px 0;
+    font-size: 16px;
+}
+
+.footer-contact i {
+    margin-right: 8px;
+    color: #ff9966;
+}
+
+.footer-bottom {
+    background: #111;
+    padding: 10px;
+    margin-top: 20px;
+    font-size: 14px;
+}
+
+.pack_head
+{
+    background: linear-gradient(45deg, green, rgb(27, 22, 22));
+
+    color: white;
+    border:  1px solid grey;
+    text-align: center;
+    margin-top: 10%;
+}
+.about-header{
+    background: linear-gradient(45deg, green, rgb(27, 22, 22));
+
+    color: white;
+    border:  1px solid grey;
+    text-align: center;
+}
+
+.rev_mod{
+
+    background:linear-gradient(45deg, rgb(199, 196, 196), white);
+}
+.about_mod{
+    background:linear-gradient(45deg, white,rgb(234, 232, 232));
+}
+
+
+/* modal */
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+    background: white;
+    margin: 10% auto;
+    padding: 20px;
+    border-radius: 10px;
+    width: 60%;
+    max-height: 70vh;
+    overflow-y: auto;
+    text-align: center;
+}
+
+.close {
+    float: right;
+    font-size: 25px;
+    cursor: pointer;
+}
+
+.close:hover {
+    color: red;
+}
+
+    </style>
+</head>
+
+<body>
+
+
+
+
+<!-- Modal for All Reviews -->
+<div id="reviewModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <h2>All Customer Reviews</h2>
+        <div class="review-list">
+            {% for review in reviews %}
+            <div class="review-card" >
+                <p style="color: black;">"{{ review.review }}"</p>
+                <strong style="color: green;">- {{ review.name }}</strong>
+                <div class="stars">
+                    {% for _ in ""|ljust:review.rating %}⭐{% endfor %}
+                </div>
+                <small style="color: red;">{{ review.created_at }}</small>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+
+
+
+
+    <!-- Hero Section -->
+    <header class="hero">
+        <h1 class="fade-in">Physiotherapy Expert</h1>
+        <p class="fade-in">Professional Care for Your Health</p>
+        <a href="#packages" class="cta-button">Explore Packages</a>
+    </header>
+
+    <!-- Packages Section -->
+    {% load static %}
+
+<section class="packages" id="packages">
+    <h2 class="pack_head">Our Packages</h2>
+    <hr>
+
+    {% for package in packages %}
+        <div class="package">
+            <img src="{{ package.image.url }}" alt="{{ package.name }}">
+            <h3>{{ package.name }}</h3>
+            <p>{{ package.description }}</p>
+            <span style="color: green;"><b>Rs. {{ package.cost }} per session</b></span>
+        </div>
+    {% endfor %}
+</section>
+
+
+
+    <!-- About Section -->
+<section class="about about_mod" id="about">
+    <h2 class="slide-up about-header">About Us</h2>
+    <br>
+    {% for about in about %}
+    <div class="about-container">
+        <img src="{{ about.image.url }}" alt="about">
+        <div class="about-text">
+            <h3>{{about.header}}</h3>
+            <p> {{about.description }}</p>
+           
+        </div>
+    </div>
+
+    {% endfor %}
+</section>
+
+
+
+
+
+    <!-- Review Carousel -->
+    <section class="reviews rev_mod" style="padding-bottom: 10px;" >
+        <h2 class="slide-up" style="color: green;">Customer Reviews</h2>
+        <br>
+        <br>
+        <div class="carousel">
+            <button class="prev" onclick="moveSlide(-1)">&#10094;</button>
+            <div class="carousel-container">
+                {% for review in reviews %}
+                <div class="review-slide">
+                    <div class="review-card">
+                        <div class="profile-pic">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+                                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
+                                <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
+                            </svg>
+                        </div>
+                        <p class="review-text" style="color: black;">"{{ review.review }}"</p>
+                        <strong class="reviewer-name" style="color: green;">- {{ review.name }}</strong>
+                        <div class="stars">
+                            {% for _ in ""|ljust:review.rating %}⭐{% endfor %}
+                        </div>
+                        <small class="review-date" style="color: red;">{{ review.created_at }}</small>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <button class="next" onclick="moveSlide(1)">&#10095;</button>
+        </div>
+    
+        <div class="progress-dots">
+            {% for review in reviews %}
+                <span class="dot" onclick="jumpToSlide({{ forloop.counter0 }})"></span>
+            {% endfor %}
+        </div>
+
+
+        <br>
+        <br>
+        <div class="view-all-container" >
+            <button class="view-all-btn" onclick="openModal()"
+            style="border-radius: 10%;"
+            >View All Reviews</button>
+        </div>
+    </section>
+    
+    
+
+    <section class="feedback">
+        <h2>Leave a Review</h2>
+        <form id="review-form" method="POST" action="{% url 'main:submit' %}">
+            {% csrf_token %}
+            <input type="text" name="name" placeholder="Your Name" required>
+            <input type="hidden" name="rating" id="rating" value="5">
+            <textarea name="review" placeholder="Your Review" required></textarea>
+    
+            <!-- Star Rating -->
+            <div class="star-rating">
+                <span class="star" data-value="1">&#9733;</span>
+                <span class="star" data-value="2">&#9733;</span>
+                <span class="star" data-value="3">&#9733;</span>
+                <span class="star" data-value="4">&#9733;</span>
+                <span class="star" data-value="5">&#9733;</span>
+            </div>
+    
+            <button type="submit">Submit Review</button>
+        </form>
+    
+       
+    
+
+    <!-- Footer Section -->
+     <br>
+     <br>
+
+<footer class="footer">
+    <div class="footer-container">
+        <div class="footer-info">
+            <h3>PhysioExpert</h3>
+            <p>Providing top-notch physiotherapy care to improve your health and wellness.</p>
+        </div>
+        <div class="footer-contact">
+            <h3>Contact Us</h3>
+            <p><i class="fas fa-map-marker-alt"></i> 123 Wellness St, Healthy City</p>
+            <p><i class="fas fa-envelope"></i> support@physioexpert.com</p>
+            <p><i class="fas fa-phone"></i> +1 (234) 567-890</p>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2025 PhysioExpert. All Rights Reserved.</p>
+    </div>
+</footer>
+
+
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+
+
+        
+    const stars = document.querySelectorAll(".star");
+    const ratingInput = document.getElementById("rating");
+
+    stars.forEach(star => {
+        star.addEventListener("click", function () {
+            const value = this.getAttribute("data-value");
+            ratingInput.value = value;
+
+            // Reset all stars
+            stars.forEach(s => s.style.color = "black");
+            // Highlight selected and previous stars
+            for (let i = 0; i < value; i++) {
+                stars[i].style.color = "gold";
+            }
+        });
+    });
+
+
+   
+});
+let currentIndex = 0;
+    const slides = document.querySelectorAll(".review-slide");
+    const totalSlides = slides.length;
+    const container = document.querySelector(".carousel-container");
+
+    function updateSlide() {
+        container.style.transform = `translateX(-${currentIndex * 100}%)`;
+    }
+
+    window.moveSlide = function (step) {
+        currentIndex += step;
+        if (currentIndex < 0) {
+            currentIndex = totalSlides - 1;
+        } else if (currentIndex >= totalSlides) {
+            currentIndex = 0;
+        }
+        updateSlide();
+    }
+
+         // Auto-slide every 5 seconds
+    setInterval(() => moveSlide(1), 5000);
+function openModal() {
+    document.getElementById("reviewModal").style.display = "block";
+}
+
+function closeModal() {
+    document.getElementById("reviewModal").style.display = "none";
+}
+
+// Close modal when clicking outside
+window.onclick = function(event) {
+    let modal = document.getElementById("reviewModal");
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+};
+
+</script>
+</body>
+
+</html>
