@@ -410,7 +410,7 @@
             color: gold;
         }
 
-        .star:hover ~ .star {
+        .star:hover~.star {
             color: #ddd;
         }
 
@@ -545,7 +545,7 @@
             gap: 40px;
         }
 
-        .footer-info, 
+        .footer-info,
         .footer-contact,
         .footer-social {
             flex: 1;
@@ -622,12 +622,12 @@
             .navbar-nav {
                 margin-top: 15px;
             }
-            
+
             .social-icons {
                 margin-top: 15px;
                 justify-content: center;
             }
-            
+
             .social-icons a {
                 margin: 0 10px;
             }
@@ -637,20 +637,20 @@
             .hero {
                 height: 80vh;
             }
-            
+
             .about-container {
                 flex-direction: column;
             }
-            
+
             .about-text {
                 text-align: center;
             }
-            
+
             .modal-content {
                 width: 90%;
                 padding: 20px;
             }
-            
+
             .review-list {
                 grid-template-columns: 1fr;
             }
@@ -660,29 +660,190 @@
             .package {
                 width: 100%;
             }
-            
+
             .card {
                 flex: 1 1 100%;
             }
-            
+
             #review-form {
                 padding: 20px;
             }
-            
+
             .footer-info,
             .footer-contact,
             .footer-social {
                 text-align: center;
             }
-            
+
             .footer h3::after {
                 left: 50%;
                 transform: translateX(-50%);
             }
-            
+
             .footer-social-icons {
                 justify-content: center;
             }
+        }
+
+
+        /* Appointment Modal Styles */
+        .appointment-modal {
+            display: none;
+            position: fixed;
+            z-index: 1050;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            overflow-y: auto;
+        }
+
+        .appointment-modal-content {
+            background: white;
+            margin: 5% auto;
+            padding: 30px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 600px;
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+
+        .appointment-modal h2 {
+            color: #27ae60;
+            margin-bottom: 20px;
+            text-align: center;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .appointment-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .appointment-form input,
+        .appointment-form select,
+        .appointment-form textarea {
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: inherit;
+            transition: all 0.3s ease;
+        }
+
+        .appointment-form input:focus,
+        .appointment-form select:focus,
+        .appointment-form textarea:focus {
+            outline: none;
+            border-color: #27ae60;
+            box-shadow: 0 0 0 3px rgba(39, 174, 96, 0.2);
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+
+        .required-field::after {
+            content: " *";
+            color: red;
+        }
+
+        .success-message {
+            display: none;
+            text-align: center;
+            color: #27ae60;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+        /* Add this to your existing modal styles */
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 25px;
+            font-size: 30px;
+            font-weight: bold;
+            color: #aaa;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .close-modal:hover {
+            color: #333;
+        }
+
+        /* Update the CTA button to remove link styling */
+        .cta-button {
+            display: inline-block;
+            background: #27ae60;
+            color: white;
+            padding: 12px 30px;
+            margin-top: 20px;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .cta-button:hover {
+            background: #1e8449;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            color: white;
+        }
+
+        /* Add to your CSS */
+        .errorlist {
+            color: #dc3545;
+            list-style: none;
+            padding-left: 0;
+            margin-top: 5px;
+            font-size: 14px;
+        }
+
+        input.error,
+        select.error,
+        textarea.error {
+            border-color: #dc3545 !important;
+        }
+
+        /* Add to your CSS */
+        .package-select-wrapper {
+            position: relative;
+        }
+
+        .package-select-wrapper select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 15px center;
+            background-size: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .package-select-wrapper select:focus {
+            outline: none;
+            border-color: #27ae60;
+            box-shadow: 0 0 0 3px rgba(39, 174, 96, 0.2);
         }
     </style>
 </head>
@@ -730,7 +891,7 @@
         <div class="hero-content">
             <h1>Physiotherapy Expert</h1>
             <p>Professional Care for Your Health</p>
-            <a href="#packages" class="cta-button">Explore Packages</a>
+            <button class="cta-button" onclick="openAppointmentModal()">Book Appointment</button>
         </div>
     </header>
 
@@ -768,7 +929,7 @@
         <div class="testimonial-header">
             <h2>What Our Clients Say</h2>
         </div>
-        
+
         <div id="testimonialCarousel" class="carousel slide" data-ride="carousel">
             <div class="carousel-inner">
                 {% for review in reviews %}
@@ -789,7 +950,7 @@
                 </div>
                 {% endfor %}
             </div>
-            
+
             <a class="carousel-control-prev" href="#testimonialCarousel" role="button" data-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                 <span class="sr-only">Previous</span>
@@ -799,7 +960,7 @@
                 <span class="sr-only">Next</span>
             </a>
         </div>
-        
+
         <button class="view-all-btn" onclick="openModal()">View All Reviews</button>
     </section>
 
@@ -810,7 +971,7 @@
             {% csrf_token %}
             <input type="text" name="name" placeholder="Your Name" required>
             <textarea name="review" placeholder="Your Review" required></textarea>
-            
+
             <div class="star-rating">
                 <span class="star" data-value="1">★</span>
                 <span class="star" data-value="2">★</span>
@@ -819,7 +980,7 @@
                 <span class="star" data-value="5">★</span>
             </div>
             <input type="hidden" name="rating" id="rating" value="5">
-            
+
             <button type="submit">Submit Review</button>
         </form>
     </section>
@@ -844,6 +1005,93 @@
             </div>
         </div>
     </div>
+
+
+
+
+
+
+    <!-- Add this modal to your template -->
+    <div id="appointmentModal" class="appointment-modal">
+        <div class="appointment-modal-content">
+            <span class="close-modal" onclick="closeAppointmentModal()">&times;</span>
+            <h2>Book Your Appointment</h2>
+            <div class="success-message" id="success-message_id"></div>
+            <form id="appointmentForm" class="appointment-form" method="POST"
+                action="{% url 'main:book_appointment' %}">
+                {% csrf_token %}
+
+                <div class="form-group">
+                    <label for="id_full_name" class="required-field">Full Name</label>
+                    {{ appointment_form.full_name }}
+                    {{ appointment_form.full_name.errors }}
+                </div>
+
+                <div class="form-group">
+                    <label for="id_email" class="required-field">Email</label>
+                    {{ appointment_form.email }}
+                    {{ appointment_form.email.errors }}
+                </div>
+
+                <div class="form-group">
+                    <label for="id_phone" class="required-field">Phone Number</label>
+                    {{ appointment_form.phone }}
+                    {{ appointment_form.phone.errors }}
+                </div>
+
+                <div class="form-group">
+                    <label for="id_age">Age</label>
+                    {{ appointment_form.age }}
+                    {{ appointment_form.age.errors }}
+                </div>
+
+                <div class="form-group">
+                    <label for="id_gender">Gender</label>
+                    {{ appointment_form.gender }}
+                    {{ appointment_form.gender.errors }}
+                </div>
+
+                <div class="form-group">
+                    <label for="id_package">Interested Package</label>
+                    <div class="package-select-wrapper">
+                        {{ appointment_form.package }}
+                    </div>
+                    {{ appointment_form.package.errors }}
+                </div>
+
+
+                <div class="form-group">
+                    <label for="id_preferred_date">Preferred Date</label>
+                    {{ appointment_form.preferred_date }}
+                    {{ appointment_form.preferred_date.errors }}
+                </div>
+
+                <div class="form-group">
+                    <label for="id_message">Additional Information</label>
+                    {{ appointment_form.message }}
+                    {{ appointment_form.message.errors }}
+                </div>
+
+                <button type="submit" class="cta-button">Submit Appointment</button>
+
+                {% if messages %}
+                <div class="success-message">
+                    {% for message in messages %}
+                    <i class="fas fa-check-circle" style="font-size: 48px; color: #27ae60;"></i>
+                    <h3>Thank You!</h3>
+                    <p>{{ message }}</p>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </form>
+
+            
+               
+            </div>
+        </div>
+    </div>
+
+
 
     <!-- Footer Section -->
     <footer class="footer">
@@ -881,20 +1129,20 @@
 
     <script>
         // Star Rating System
-        document.addEventListener("DOMContentLoaded", function() {
+        document.addEventListener("DOMContentLoaded", function () {
             const stars = document.querySelectorAll(".star");
             const ratingInput = document.getElementById("rating");
-            
+
             // Initialize with 5 stars selected
             stars.forEach((star, index) => {
                 if (index < 5) star.classList.add('active');
             });
-            
+
             stars.forEach(star => {
-                star.addEventListener("click", function() {
+                star.addEventListener("click", function () {
                     const value = parseInt(this.getAttribute("data-value"));
                     ratingInput.value = value;
-                    
+
                     // Update star display
                     stars.forEach((s, index) => {
                         if (index < value) {
@@ -904,9 +1152,9 @@
                         }
                     });
                 });
-                
+
                 // Hover effect
-                star.addEventListener("mouseover", function() {
+                star.addEventListener("mouseover", function () {
                     const value = parseInt(this.getAttribute("data-value"));
                     stars.forEach((s, index) => {
                         if (index < value) {
@@ -916,8 +1164,8 @@
                         }
                     });
                 });
-                
-                star.addEventListener("mouseout", function() {
+
+                star.addEventListener("mouseout", function () {
                     stars.forEach((s, index) => {
                         if (s.classList.contains('active')) {
                             s.style.color = 'gold';
@@ -927,19 +1175,19 @@
                     });
                 });
             });
-            
+
             // Smooth scrolling for navbar links
             document.querySelectorAll('.navbar-nav a').forEach(anchor => {
-                anchor.addEventListener('click', function(e) {
+                anchor.addEventListener('click', function (e) {
                     e.preventDefault();
-                    
+
                     const targetId = this.getAttribute('href');
                     if (targetId === '#') return;
-                    
+
                     document.querySelector(targetId).scrollIntoView({
                         behavior: 'smooth'
                     });
-                    
+
                     // Close mobile menu if open
                     if (window.innerWidth < 992) {
                         const navbarCollapse = document.querySelector('.navbar-collapse');
@@ -950,38 +1198,125 @@
                 });
             });
         });
-        
+
         // Modal Functions
         function openModal() {
             document.getElementById("reviewModal").style.display = "block";
             document.body.style.overflow = "hidden";
         }
-        
+
         function closeModal() {
             document.getElementById("reviewModal").style.display = "none";
             document.body.style.overflow = "auto";
         }
-        
+
         // Close modal when clicking outside
-        window.onclick = function(event) {
+        window.onclick = function (event) {
             const modal = document.getElementById("reviewModal");
             if (event.target == modal) {
                 closeModal();
             }
         };
-        
+
         // Smooth scrolling for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             if (anchor.classList.contains('nav-link')) return;
-            
-            anchor.addEventListener('click', function(e) {
+
+            anchor.addEventListener('click', function (e) {
                 e.preventDefault();
-                
+
                 document.querySelector(this.getAttribute('href')).scrollIntoView({
                     behavior: 'smooth'
                 });
             });
         });
+
+
+
+
+
+        // Update your existing JavaScript with these functions
+        function openAppointmentModal() {
+            document.getElementById("appointmentModal").style.display = "block";
+            document.body.style.overflow = "hidden";
+        }
+
+        function closeAppointmentModal() {
+            document.getElementById("appointmentModal").style.display = "none";
+            document.body.style.overflow = "auto";
+
+            // Reset success message when closing
+            const successMessages = document.querySelectorAll(".success-message");
+            successMessages.forEach(msg => msg.style.display = "none");
+        }
+
+        // Close appointment modal when clicking outside
+        window.onclick = function (event) {
+            const modal = document.getElementById("appointmentModal");
+            if (event.target == modal) {
+                closeAppointmentModal();
+            }
+        };
+
+        // Form validation
+        document.getElementById("appointmentForm")?.addEventListener("input", function (e) {
+            const requiredFields = document.querySelectorAll(".required-field");
+            requiredFields.forEach(field => {
+                const inputId = field.getAttribute("for");
+                const input = document.getElementById(inputId);
+
+                if (input.value.trim() === "") {
+                    input.style.borderColor = "#ff6b6b";
+                } else {
+                    input.style.borderColor = "#ddd";
+                }
+            });
+        });
+
+        // Handle form submission success
+        {% if messages %}
+        document.addEventListener("DOMContentLoaded", function () {
+            openAppointmentModal();
+            // Hide form and show success message
+            document.getElementById("appointmentForm").style.display = "none";
+            document.querySelector(".success-message").style.display = "block";
+
+            // Auto-close after 3 seconds
+            setTimeout(function () {
+                closeAppointmentModal();
+                // Reset form
+                document.getElementById("appointmentForm").reset();
+                document.getElementById("appointmentForm").style.display = "block";
+            }, 3000);
+        });
+        {% endif %}
+
+
+
+        // In your template
+        document.addEventListener("DOMContentLoaded", function () {
+            // Check if we should show the appointment modal
+            {% if show_appointment_modal %}
+            openAppointmentModal();
+
+            // Hide form and show success message
+            document.getElementById("appointmentForm").style.display = "none";
+            document.getElementById("success-message_id").innerHTML = ` <i class="fas fa-check-circle" style="font-size: 48px; color: #27ae60;"></i>
+                <h3>Thank You!</h3>
+                <p>Your appointment has been booked successfully!</p>
+                <p>We will contact you soon.</p>`
+
+            // Auto-close after 1 second
+            setTimeout(function () {
+                closeAppointmentModal();
+                // Reset form
+                document.getElementById("appointmentForm").reset();
+                document.getElementById("appointmentForm").style.display = "block";
+            }, 10000);
+            {% endif %}
+        });
+
     </script>
 </body>
+
 </html>
