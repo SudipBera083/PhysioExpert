@@ -96,7 +96,7 @@ Experience the application live:
 
 
 # Packages
-![Packages](./samples/packages.png)
+![Packages](./samples/package.png)
 
 # About 
 ![About](./samples/about.png)
@@ -104,3 +104,8 @@ Experience the application live:
 
 # Contact 
 ![Contact](./samples/footer.png)
+
+
+# Admin Pannel
+
+![Admin](./samples/admin.png)
