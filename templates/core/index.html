@@ -1061,6 +1061,71 @@
                 opacity: 0;
             }
         }
+
+        /* ------------------------------------------- */
+
+        /* Layout Styles */
+        .testimonial-feedback-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            padding: 40px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .testimonials-wrapper,
+        .feedback-wrapper {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        /* Testimonial Carousel Styles */
+        .carousel-controls {
+            position: relative;
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .carousel-control-prev,
+        .carousel-control-next {
+            position: relative;
+            width: 50px;
+            height: 50px;
+            background-color: #27ae60;
+            border-radius: 50%;
+            opacity: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .carousel-control-prev:hover,
+        .carousel-control-next:hover {
+            background-color: #1e8449;
+            transform: scale(1.1);
+        }
+
+        .carousel-control-prev-icon,
+        .carousel-control-next-icon {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .testimonial-feedback-container {
+                flex-direction: column;
+            }
+
+            .testimonials-wrapper,
+            .feedback-wrapper {
+                width: 100%;
+            }
+        }
     </style>
 </head>
 
@@ -1140,65 +1205,76 @@
         {% endfor %}
     </section>
 
-    <!-- Testimonials Section -->
-    <section class="testimonials" id="testimonials">
-        <div class="testimonial-header">
-            <h2>What Our Clients Say</h2>
-        </div>
+    <!-- Combined Testimonials and Feedback Section -->
+    <section class="testimonial-feedback-container">
+        <!-- Testimonials Section -->
+        <div class="testimonials-wrapper">
+            <div class="testimonials" id="testimonials">
+                <div class="testimonial-header">
+                    <h2>What Our Clients Say</h2>
+                </div>
 
-        <div id="testimonialCarousel" class="carousel slide" data-ride="carousel">
-            <div class="carousel-inner">
-                {% for review in reviews %}
-                <div class="carousel-item {% if forloop.first %}active{% endif %}">
-                    <div class="card-deck justify-content-center">
-                        <div class="card">
-                            <div class="card-body text-center">
-                                <img src="{% static 'images/users.webp' %}" alt="{{ review.name }}" class="profile-img">
-                                <p class="review-text">"{{ review.review }}"</p>
-                                <p class="reviewer-name">- {{ review.name }}</p>
-                                <div class="stars">
-                                    {% for _ in ""|ljust:review.rating %}★{% endfor %}
+                <div id="testimonialCarousel" class="carousel slide" data-ride="carousel" data-interval="5000">
+                    <div class="carousel-inner">
+                        {% for review in reviews %}
+                        <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                            <div class="card-deck justify-content-center">
+                                <div class="card">
+                                    <div class="card-body text-center">
+                                        <img src="{% static 'images/users.webp' %}" alt="{{ review.name }}"
+                                            class="profile-img">
+                                        <p class="review-text">"{{ review.review }}"</p>
+                                        <p class="reviewer-name">- {{ review.name }}</p>
+                                        <div class="stars">
+                                            {% for _ in ""|ljust:review.rating %}★{% endfor %}
+                                        </div>
+                                        <small class="review-date">{{ review.created_at }}</small>
+                                    </div>
                                 </div>
-                                <small class="review-date">{{ review.created_at }}</small>
                             </div>
                         </div>
+                        {% endfor %}
+                    </div>
+
+                    <!-- Custom Carousel Controls -->
+                    <div class="carousel-controls">
+                        <a class="carousel-control-prev" href="#testimonialCarousel" role="button" data-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                        <a class="carousel-control-next" href="#testimonialCarousel" role="button" data-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Next</span>
+                        </a>
                     </div>
                 </div>
-                {% endfor %}
-            </div>
 
-            <a class="carousel-control-prev" href="#testimonialCarousel" role="button" data-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="sr-only">Previous</span>
-            </a>
-            <a class="carousel-control-next" href="#testimonialCarousel" role="button" data-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="sr-only">Next</span>
-            </a>
+                <button class="view-all-btn" onclick="openModal()">View All Reviews</button>
+            </div>
         </div>
 
-        <button class="view-all-btn" onclick="openModal()">View All Reviews</button>
-    </section>
+        <!-- Feedback Section -->
+        <div class="feedback-wrapper">
+            <div class="feedback" id="feedback">
+                <h2>Leave a Review</h2>
+                <form id="review-form" method="POST" action="{% url 'main:submit' %}">
+                    {% csrf_token %}
+                    <input type="text" name="name" placeholder="Your Name" required>
+                    <textarea name="review" placeholder="Your Review" required></textarea>
 
-    <!-- Feedback Section -->
-    <section class="feedback" id="feedback">
-        <h2>Leave a Review</h2>
-        <form id="review-form" method="POST" action="{% url 'main:submit' %}">
-            {% csrf_token %}
-            <input type="text" name="name" placeholder="Your Name" required>
-            <textarea name="review" placeholder="Your Review" required></textarea>
+                    <div class="star-rating">
+                        <span class="star" data-value="1">★</span>
+                        <span class="star" data-value="2">★</span>
+                        <span class="star" data-value="3">★</span>
+                        <span class="star" data-value="4">★</span>
+                        <span class="star" data-value="5">★</span>
+                    </div>
+                    <input type="hidden" name="rating" id="rating" value="5">
 
-            <div class="star-rating">
-                <span class="star" data-value="1">★</span>
-                <span class="star" data-value="2">★</span>
-                <span class="star" data-value="3">★</span>
-                <span class="star" data-value="4">★</span>
-                <span class="star" data-value="5">★</span>
+                    <button type="submit">Submit Review</button>
+                </form>
             </div>
-            <input type="hidden" name="rating" id="rating" value="5">
-
-            <button type="submit">Submit Review</button>
-        </form>
+        </div>
     </section>
 
     <!-- Modal for All Reviews -->
@@ -1406,6 +1482,20 @@
                         }
                     });
                 });
+
+                $('#testimonialCarousel').carousel({
+                    interval: 5000, // Change slide every 5 seconds
+                    pause: "hover" // Pause on mouse hover
+                });
+
+                // Manual control buttons
+                $('.carousel-control-prev').click(function () {
+                    $('#testimonialCarousel').carousel('prev');
+                });
+
+                $('.carousel-control-next').click(function () {
+                    $('#testimonialCarousel').carousel('next');
+                });
             });
 
             // Smooth scrolling for navbar links
@@ -1550,52 +1640,55 @@
 
 
         // Typing effect
-        document.addEventListener("DOMContentLoaded", function() {
-        const subtitle = document.getElementById("animated-subtitle");
-        const messages = [
-            "Professional Care for Your Health",
-            "Personalized Treatment Plans",
-            "Expert Rehabilitation Services"
-        ];
-        let messageIndex = 0;
-        let charIndex = 0;
-        let isDeleting = false;
-        let typingSpeed = 100;
-        let pauseBetweenMessages = 2000;
-        let deleteSpeed = 50;
+        document.addEventListener("DOMContentLoaded", function () {
+            const subtitle = document.getElementById("animated-subtitle");
+            const messages = [
+                "Professional Care for Your Health",
+                "Personalized Treatment Plans",
+                "Expert Rehabilitation Services"
+            ];
+            let messageIndex = 0;
+            let charIndex = 0;
+            let isDeleting = false;
+            let typingSpeed = 100;
+            let pauseBetweenMessages = 2000;
+            let deleteSpeed = 50;
 
-        function typeWriter() {
-            const currentMessage = messages[messageIndex];
-            
-            if (isDeleting) {
-                // Deleting phase
-                subtitle.innerHTML = currentMessage.substring(0, charIndex - 1) + '<span class="typing-cursor"></span>';
-                charIndex--;
-                typingSpeed = deleteSpeed;
-            } else {
-                // Typing phase
-                subtitle.innerHTML = currentMessage.substring(0, charIndex + 1) + '<span class="typing-cursor"></span>';
-                charIndex++;
-                typingSpeed = 100;
+            function typeWriter() {
+                const currentMessage = messages[messageIndex];
+
+                if (isDeleting) {
+                    // Deleting phase
+                    subtitle.innerHTML = currentMessage.substring(0, charIndex - 1) + '<span class="typing-cursor"></span>';
+                    charIndex--;
+                    typingSpeed = deleteSpeed;
+                } else {
+                    // Typing phase
+                    subtitle.innerHTML = currentMessage.substring(0, charIndex + 1) + '<span class="typing-cursor"></span>';
+                    charIndex++;
+                    typingSpeed = 100;
+                }
+
+                if (!isDeleting && charIndex === currentMessage.length) {
+                    // Finished typing, pause then start deleting
+                    typingSpeed = pauseBetweenMessages;
+                    isDeleting = true;
+                } else if (isDeleting && charIndex === 0) {
+                    // Finished deleting, move to next message
+                    isDeleting = false;
+                    messageIndex = (messageIndex + 1) % messages.length;
+                    typingSpeed = 500; // Pause before typing next message
+                }
+
+                setTimeout(typeWriter, typingSpeed);
             }
 
-            if (!isDeleting && charIndex === currentMessage.length) {
-                // Finished typing, pause then start deleting
-                typingSpeed = pauseBetweenMessages;
-                isDeleting = true;
-            } else if (isDeleting && charIndex === 0) {
-                // Finished deleting, move to next message
-                isDeleting = false;
-                messageIndex = (messageIndex + 1) % messages.length;
-                typingSpeed = 500; // Pause before typing next message
-            }
+            // Start the animation
+            setTimeout(typeWriter, 1000); // Initial delay
+        });
 
-            setTimeout(typeWriter, typingSpeed);
-        }
 
-        // Start the animation
-        setTimeout(typeWriter, 1000); // Initial delay
-    });
+
     </script>
 </body>
 
